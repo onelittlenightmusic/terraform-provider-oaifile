@@ -45,3 +45,13 @@ jobs:
       - name: Print Output2
         id: output2
         run: ls dist -al
+      - uses: dcarbone/tfcloud-provider-push-action@v0.1.2 # version should be latest release
+        if: ${{ success() }} # only run if previous steps succeeded
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # this is created for you by Github
+          TF_TOKEN: ${{ secrets.TFTOKEN }} # this assumes you've created an Action secret with this name
+          TF_GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }} # this assumes you've created an Action secret with this name
+          TF_REGISTRY_NAME: private
+          TF_ORGANIZATION_NAME: onelittlenightmusic
+          TF_NAMESPACE: onelittlenightmusic
+          TF_PROVIDER_NAME: oaifile
